@@ -19,7 +19,7 @@ def final_postion(movements):
     """
     horizontal_mask = movements[:, 0] == 0
     vertical_mask = ~horizontal_mask
-    horizontal_position = np.sum(movements[horizontal_mask,1])
+    horizontal_position = np.sum(movements[horizontal_mask, 1])
     vertical_position = movements[vertical_mask, 0].dot(movements[vertical_mask, 1])
     return horizontal_position, vertical_position
 
@@ -41,6 +41,7 @@ def final_postion_2(movements):
     vertical_position = 0
     aim_value = 0
     for i in range(len(horizontal_index)-1):
+        # Range of aim changes [start, end)
         start = horizontal_index[i] + 1
         end = horizontal_index[i+1]
         if start != end:
@@ -49,9 +50,26 @@ def final_postion_2(movements):
 
     return horizontal_position, vertical_position
 
+def final_postion_3(movements):
+    """
+    Got this working with Victor's help
+    """
+    horizontal_mask = movements[:, 0] == 0
+    vertical_mask = ~horizontal_mask
+    # Could parse the data this way to start but leaving for backwards compatibility
+    # DeltaX,DeltaAim
+    deltas = np.zeros(movements.shape)
+    deltas[horizontal_mask, 0] = movements[horizontal_mask, 1]
+    deltas[vertical_mask, 1] = movements[vertical_mask, 0] * movements[vertical_mask, 1]
+
+    vertical_position = deltas[:,0].dot(np.cumsum(deltas[:,1]))
+    horizontal_position = np.sum(deltas[:,0])
+
+    return horizontal_position, vertical_position
+
 
 def problem_2(movements):
-    return np.prod(final_postion_2(movements))
+    return np.prod(final_postion_3(movements))
 
 
 if __name__=="__main__":
