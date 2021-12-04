@@ -61,7 +61,7 @@ def apply_filter(mask, index, numbers, criteria):
     return mask
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # Binary vectors
     numbers = np.loadtxt("input.txt", converters={0: string_binary_converter})
 
