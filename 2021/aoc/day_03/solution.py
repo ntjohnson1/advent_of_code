@@ -1,3 +1,4 @@
+from utils import solution_timing
 import numpy as np
 
 
@@ -64,6 +65,7 @@ def apply_filter(mask, index, numbers, criteria):
 if __name__ == "__main__":
     # Binary vectors
     numbers = np.loadtxt("input.txt", converters={0: string_binary_converter})
-
-    print(f"Problem 1: {problem_1(numbers)}")
-    print(f"Problem 2: {problem_2(numbers)}")
+    with solution_timing("Problem 1"):
+        print(problem_1(numbers))
+    with solution_timing("Problem 2"):
+        print(problem_2(numbers))

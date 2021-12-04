@@ -1,4 +1,6 @@
+from utils import solution_timing
 import numpy as np
+
 
 def part_1(measurements):
     """
@@ -7,6 +9,7 @@ def part_1(measurements):
     """
     num_increases = np.sum(measurements[1:] > measurements[:-1])
     return num_increases
+
 
 def part_2(measurements, window_size=3):
     """
@@ -21,7 +24,10 @@ def part_2(measurements, window_size=3):
     num_increases = np.sum(window_sums[1:] > window_sums[:-1])
     return num_increases
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     measurements = np.loadtxt("input.txt")
-    print(f"Part 1 Answer is: {part_1(measurements)}")
-    print(f"Part 2 Answer is: {part_2(measurements)}")
+    with solution_timing("Problem 1"):
+        print(part_1(measurements))
+    with solution_timing("Problem 2"):
+        print(part_2(measurements))

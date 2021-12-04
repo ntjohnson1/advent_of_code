@@ -1,3 +1,4 @@
+from utils import solution_timing
 import numpy as np
 
 ROW_COUNT_IDX = 0
@@ -58,6 +59,7 @@ if __name__ == "__main__":
         first_line = f.readline()
     bingo_numbers = np.fromstring(first_line, sep=',', dtype=np.uint8)
     bingo_boards = np.genfromtxt(input_file, skip_header=1, dtype=np.uint8).reshape([-1, 5, 5])
-
-    print(f"Problem 1: {problem_1(bingo_numbers, bingo_boards)}")
-    print(f"Problem 2: {problem_2(bingo_numbers, bingo_boards)}")
+    with solution_timing("Problem 1"):
+        print(problem_1(bingo_numbers, bingo_boards))
+    with solution_timing("Problem 2"):
+        print(problem_2(bingo_numbers, bingo_boards))

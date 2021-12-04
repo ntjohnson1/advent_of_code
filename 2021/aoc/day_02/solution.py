@@ -1,4 +1,6 @@
+from utils import solution_timing
 import numpy as np
+
 
 def direction_converter(direction):
     direction = direction.decode("utf-8")
@@ -50,6 +52,7 @@ def final_postion_2(movements):
 
     return horizontal_position, vertical_position
 
+
 def final_postion_3(movements):
     """
     Got this working with Victor's help
@@ -72,9 +75,11 @@ def problem_2(movements):
     return np.prod(final_postion_3(movements))
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     # direction, magnitude
     # direction: {0: forward, 1: down, -1: up}
     movements = np.loadtxt("input.txt", converters={0:direction_converter}, delimiter=" ")
-    print(f"Problem 1: {problem_1(movements)}")
-    print(f"Problem 2: {problem_2(movements)}")
+    with solution_timing("Problem 1"):
+        print(problem_1(movements))
+    with solution_timing("Problem 2"):
+        print(problem_2(movements))
