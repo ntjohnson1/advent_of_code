@@ -9,12 +9,13 @@ Y2_IDX = 3
 # Could be more selective, but easier to cast all to same
 INTEGER_TYPE = np.int16
 
+
 def get_vent_map(vent_locations):
     x_max = np.max(vent_locations[:, [X1_IDX, X2_IDX]]) + 1
     y_max = np.max(vent_locations[:, [Y1_IDX, Y2_IDX]]) + 1
     vent_map = np.zeros((x_max, y_max), dtype=INTEGER_TYPE)
     for (x1, y1, x2, y2) in vent_locations:
-        x_slice = np.linspace(x1, x2, endpoint=True, num=1+np.abs(x2-x1), dtype=INTEGER_TYPE)
+        x_slice = np.linspace(x1, x2, endpoint=True, num=1 + np.abs(x2 - x1), dtype=INTEGER_TYPE)
         y_slice = np.linspace(y1, y2, endpoint=True, num=1 + np.abs(y2 - y1), dtype=INTEGER_TYPE)
         vent_map[x_slice, y_slice] += 1
     return vent_map
