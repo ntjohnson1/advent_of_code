@@ -69,12 +69,14 @@ def problem_2(floor_heights):
         basin_map = update_direction(basin_map, "up")
         basin_map = update_direction(basin_map, "down")
         basin_map = update_direction(basin_map, "left")
+        basin_map = update_direction(basin_map, "right")
         if -1 not in basin_map:  # Every point assigned but boundaries
             remaining_changes = False
 
     valid_basins = basin_map[basin_map != -2]
     values, counts = np.unique(valid_basins, return_counts=True)
-    return np.prod(np.sort(counts)[-3:])
+    top_3_counts = counts[np.argpartition(counts, -3)][-3:]
+    return np.prod(top_3_counts)
 
 
 if __name__ == "__main__":
