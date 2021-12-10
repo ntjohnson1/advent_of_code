@@ -76,7 +76,7 @@ def problem_1(pattern_arrays):
         not_already_found = not_already_found & ~bad
         i += 1
 
-    return np.sum(first_breaking_pattern)
+    return first_breaking_pattern
 
 
 def bad_syntax(matching_patterns, pattern_arrays, forward_idx, backward_idx):
@@ -206,9 +206,28 @@ def bad_sanity():
     ]))
 
 
+def problem_2(patterns, first_breaking_patterns):
+    missing_patterns = np.where(first_breaking_patterns==0)[0]
+    patterns[patterns == 9999] = 0
+    patterns[patterns == -9999] = 0
+    patterns[patterns == -3] = 1
+    patterns[patterns == -57] = 2
+    patterns[patterns == -1197] = 3
+    patterns[patterns == -25137] = 4
+    np_score = np.zeros(len(missing_patterns,))
+    for score_idx, line_idx in enumerate(missing_patterns):
+        non_zero_idx = np.where(patterns[line_idx])[0]
+        non_zeros = np.array(patterns[line_idx, non_zero_idx], dtype=np.uint64)
+        np_score[score_idx] = np.dot(5**np.arange(len(non_zeros)), non_zeros)
+
+    return np.median(np_score)
+
+
 if __name__ == "__main__":
     input_file = "input.txt"
     patterns = np.loadtxt(input_file, converters={0: lazy_converter}, delimiter=",", dtype=np.int16)
     with solution_timing("Problem 1"):
-        print(problem_1(patterns))
-    # too low 55182
+        first_breaking_pattern = problem_1(patterns)
+        print(np.sum(first_breaking_pattern))
+    with solution_timing("Problem 2"):
+        print(problem_2(patterns, first_breaking_pattern))
